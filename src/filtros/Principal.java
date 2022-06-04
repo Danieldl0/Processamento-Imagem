@@ -40,7 +40,8 @@ public class Principal extends JFrame {
 	private BinarizacaoPanel binarizacaoPanel;
 	private RgbYiqPanel rgbyiqPanel;
 	private BrilhoPanel brilhoPanel;
-	
+	private PassaBaixaPanel passaBaixaPanel;
+	private PassaAltaPanel passaAltaPanel;
 	
 	/**
 	 * Launch the application.
@@ -72,6 +73,8 @@ public class Principal extends JFrame {
 		binarizacaoPanel = new BinarizacaoPanel();
 		rgbyiqPanel = new RgbYiqPanel();
 		brilhoPanel = new BrilhoPanel();
+		passaBaixaPanel = new PassaBaixaPanel();
+		passaAltaPanel = new PassaAltaPanel();
 			
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 959, 521);
@@ -150,11 +153,11 @@ public class Principal extends JFrame {
 		panel_buttons.setVisible(false);
 		
 		JButton bandaRGB_button = new JButton("bandaRGB");
-		bandaRGB_button.setBounds(0, 144, 99, 23);
+		bandaRGB_button.setBounds(0, 64, 99, 23);
 		panel_buttons.add(bandaRGB_button);
 		
 		JButton tonalidadeRGB_button = new JButton("tonalidade");
-		tonalidadeRGB_button.setBounds(108, 144, 99, 23);
+		tonalidadeRGB_button.setBounds(108, 64, 99, 23);
 		panel_buttons.add(tonalidadeRGB_button);
 		
 		JButton btnNewButton_7 = new JButton("brilhoRGB");
@@ -165,7 +168,7 @@ public class Principal extends JFrame {
 				menuClicked(brilhoPanel);
 			}
 		});
-		btnNewButton_7.setBounds(0, 274, 99, 23);
+		btnNewButton_7.setBounds(0, 194, 99, 23);
 		panel_buttons.add(btnNewButton_7);
 		
 		JButton greyScale_button = new JButton("greyScale");
@@ -176,12 +179,12 @@ public class Principal extends JFrame {
 				menuClicked(greyscalePanel);
 			}
 		});
-		greyScale_button.setBounds(0, 212, 99, 23);
+		greyScale_button.setBounds(0, 132, 99, 23);
 		panel_buttons.add(greyScale_button);
 		
 		JLabel lblNewLabel_1 = new JLabel("Filtros");
 		lblNewLabel_1.setFont(new Font("Verdana", Font.PLAIN, 20));
-		lblNewLabel_1.setBounds(68, 44, 72, 23);
+		lblNewLabel_1.setBounds(68, 11, 72, 23);
 		panel_buttons.add(lblNewLabel_1);
 		
 		JButton btnNewButton_4 = new JButton("negativo");
@@ -192,7 +195,7 @@ public class Principal extends JFrame {
 				menuClicked(negativoPanel);
 			}
 		});
-		btnNewButton_4.setBounds(108, 212, 99, 23);
+		btnNewButton_4.setBounds(108, 132, 99, 23);
 		panel_buttons.add(btnNewButton_4);
 		
 		JButton rgbyiq_button = new JButton("RGB/YIQ");
@@ -203,7 +206,7 @@ public class Principal extends JFrame {
 				menuClicked(rgbyiqPanel);
 			}
 		});
-		rgbyiq_button.setBounds(108, 274, 99, 23);
+		rgbyiq_button.setBounds(108, 194, 99, 23);
 		panel_buttons.add(rgbyiq_button);
 		
 		JButton binarizacao_button = new JButton("Binariza\u00E7\u00E3o");
@@ -215,8 +218,30 @@ public class Principal extends JFrame {
 				
 			}
 		});
-		binarizacao_button.setBounds(41, 335, 120, 23);
+		binarizacao_button.setBounds(41, 255, 120, 23);
 		panel_buttons.add(binarizacao_button);
+		
+		JButton passaBaixa_button = new JButton("passa baixa");
+		passaBaixa_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				passaBaixaPanel.recebeImage(imagem);
+				panel_filtro_control.add(passaBaixaPanel);
+				menuClicked(passaBaixaPanel);
+			}
+		});
+		passaBaixa_button.setBounds(41, 323, 120, 23);
+		panel_buttons.add(passaBaixa_button);
+		
+		JButton btnNewButton = new JButton("passa alta");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				passaAltaPanel.recebeImage(imagem);
+				panel_filtro_control.add(passaAltaPanel);
+				menuClicked(passaAltaPanel);
+			}
+		});
+		btnNewButton.setBounds(41, 380, 120, 23);
+		panel_buttons.add(btnNewButton);
 		
 		tonalidadeRGB_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -231,7 +256,6 @@ public class Principal extends JFrame {
 				bandaRGBPanel.recebeImage(imagem);
 				panel_filtro_control.add(bandaRGBPanel);
 				menuClicked(bandaRGBPanel);
-				//panel_filtro_img.add(filtroPanel);
 			}
 		});
 		
@@ -253,7 +277,7 @@ public class Principal extends JFrame {
 		panel_filtro_control.setBounds(593, 11, 340, 435);
 		contentPane.add(panel_filtro_control);
 		
-		JLabel lblNewLabel_2 = new JLabel("PROJETO 1");
+		JLabel lblNewLabel_2 = new JLabel("PROJETO");
 		lblNewLabel_2.setFont(new Font("Verdana", Font.PLAIN, 20));
 		lblNewLabel_2.setBounds(114, 169, 119, 80);
 		panel_filtro_control.add(lblNewLabel_2);
@@ -285,6 +309,8 @@ public class Principal extends JFrame {
 		binarizacaoPanel.setVisible(false);
 		rgbyiqPanel.setVisible(false);
 		brilhoPanel.setVisible(false);
+		passaBaixaPanel.setVisible(false);
+		passaAltaPanel.setVisible(false);
 		
 		panel.setVisible(true);
 	}

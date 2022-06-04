@@ -1,11 +1,9 @@
-package filtros;
+package aula01;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
-public class Filtros {
+public class FiltrosRGB {
 
 	
 	public BufferedImage bandaRGB(BufferedImage img, String banda) {
@@ -188,7 +186,7 @@ public class Filtros {
 	}
 	
 
-	public BufferedImage binarizacao(BufferedImage img, int limiar) {
+	public BufferedImage binarização(BufferedImage img, int limiar) {
 			
 		int width = img.getWidth();
 		int height = img.getHeight();
@@ -207,6 +205,8 @@ public class Filtros {
 				}else {
 					red = 255;
 				}
+				
+				
 				
 				Color newRGB = new Color(red,red,red);
 				imgSaida.setRGB(x, y, newRGB.getRGB());
@@ -257,12 +257,10 @@ public class Filtros {
                 int green = (int) (matrizYIQ[y][x][0] - 0.272* matrizYIQ[y][x][1] - 0.647* matrizYIQ[y][x][2]);
                 int blue = (int) (matrizYIQ[y][x][0] - 1.106 * matrizYIQ[y][x][1] + 1.703 * matrizYIQ[y][x][2]);
 				
-                
                 red = verificarValorRGB(red);
                 green = verificarValorRGB(green);
                 blue = verificarValorRGB(blue);
                 
-           
 				Color newRGB = new Color(red,green,blue);
                 imgSaida.setRGB(x,y,newRGB.getRGB());
 			}
@@ -391,7 +389,7 @@ public class Filtros {
 		
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
-				imgYIQ[y][x][0] = 255 - imgYIQ[y][x][0];
+				imgYIQ[y][x][0] = 255 - imgYIQ[y][x][0] ;
 			}
 		}
 		
@@ -405,120 +403,6 @@ public class Filtros {
 		
 		
 		return imgRGB;
-	}
-	
-	public BufferedImage media(BufferedImage img, int tamVizinhaca) {
-		
-		int width = img.getWidth();
-		int height = img.getHeight();
-		
-		BufferedImage imgSaida = copyImage(img);
-		
-		int tamKernel = tamVizinhaca / 2;
-		
-		for(int y = tamKernel; y < height-tamKernel; y++) {
-			for(int x = tamKernel; x < width-tamKernel; x++) {
-
-				int soma = 0;
-				for(int i = x-tamKernel; i <= x+tamKernel; i++){
-					for(int j = y-tamKernel; j <= y+tamKernel; j++){
-						Color cor = new Color(img.getRGB(i,j));
-						int red = cor.getRed();
-						soma += red;
-					}
-				}
-				
-				int media = soma/(tamVizinhaca*tamVizinhaca);
-								
-				Color newRGB = new Color(media,media,media);
-				imgSaida.setRGB(x, y, newRGB.getRGB());
-			}
-		}
-		
-		return imgSaida;
-	}
-	
-	public BufferedImage mediana(BufferedImage img, int tamVizinhaca) {
-		
-		int width = img.getWidth();
-		int height = img.getHeight();
-		
-		BufferedImage imgSaida = copyImage(img);
-		
-		int tamKernel = tamVizinhaca / 2;
-
-		for(int y = tamKernel; y < height-tamKernel; y++) {
-			for(int x = tamKernel; x < width-tamKernel; x++) {
-				
-				int[] valores = new int[tamVizinhaca*tamVizinhaca];
-				int count = 0;
-
-				for(int i = x-tamKernel; i <= x+tamKernel; i++){
-					for(int j = y-tamKernel; j <= y+tamKernel; j++){
-						Color cor = new Color(img.getRGB(i,j));
-						int red = cor.getRed();
-						valores[count] = red;
-						count++;
-					}
-				}
-
-				Arrays.sort(valores);
-				int mediana = valores[tamVizinhaca*tamVizinhaca/2];
-
-				Color newRGB = new Color(mediana,mediana,mediana);
-				imgSaida.setRGB(x, y, newRGB.getRGB());
-			}
-		}
-		
-		return imgSaida;
-	}
-
-	public BufferedImage convolucao(BufferedImage img, double[] kernel) {
-		
-		int width = img.getWidth();
-		int height = img.getHeight();
-		
-		BufferedImage imgSaida = copyImage(img);
-		
-		int tamKernel = (int) Math.sqrt(kernel.length) / 2;
-
-		for(int y = tamKernel; y < height-tamKernel; y++) {
-			for(int x = tamKernel; x < width-tamKernel; x++) {
-				
-				int count = 0;
-				int soma = 0;
-				for(int i = x-tamKernel; i <= x+tamKernel; i++){
-					for(int j = y-tamKernel; j <= y+tamKernel; j++){
-						Color cor = new Color(img.getRGB(i,j));
-						int red = cor.getRed();
-						soma += (red * kernel[count]);
-						count++;
-					}
-				}
-			
-
-				if (soma > 255) {
-					soma = 255;
-				}
-				if(soma < 0) {
-					soma = 0;
-				}
-				
-				 Color newRGB = new Color(soma,soma,soma); imgSaida.setRGB(x, y,
-				 newRGB.getRGB());
-				 
-			}
-		}
-		
-		return imgSaida;
-	}
-
-	private BufferedImage copyImage(BufferedImage imgOriginal) {
-		BufferedImage imgCopy = new BufferedImage(imgOriginal.getWidth(), imgOriginal.getHeight(), imgOriginal.getType());
-	    Graphics graphics = imgCopy.getGraphics();
-	    graphics.drawImage(imgOriginal, 0, 0, null);
-	    graphics.dispose();
-	    return imgCopy;
 	}
 	
 }
